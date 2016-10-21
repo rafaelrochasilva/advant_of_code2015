@@ -1,4 +1,4 @@
-defmodule AdventOfCode.Day1 do
+defmodule AdventOfCode.Day1.DeliverPresentsV1 do
   def floor(deliver) do
     deliver
     |> to_char_list
