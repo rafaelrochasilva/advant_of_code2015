@@ -1,4 +1,4 @@
-defmodule AdventOfCode.Day1.DeliverPresentsV1 do
+defmodule AdventOfCode.Day1.DeliverPresentRecursion do
   @moduledoc """
   Deliver Presents is used to help Santa to find the proper floor given a string
   file containing curlybrackets (()).
@@ -9,9 +9,9 @@ defmodule AdventOfCode.Day1.DeliverPresentsV1 do
   and find the floor that Santa should deliver the present.
 
   ## Examples
-    iex> AdventOfCode.Day1.DeliverPresentsV1.floor("(())")
+    iex> AdventOfCode.Day1.DeliverPresentRecursion.floor("(())")
     0
-    iex> AdventOfCode.Day1.DeliverPresentsV1.floor("(())")
+    iex> AdventOfCode.Day1.DeliverPresentRecursion.floor("(())")
     0
   """
   def floor(deliver) do
@@ -21,6 +21,7 @@ defmodule AdventOfCode.Day1.DeliverPresentsV1 do
   end
 
   defp find_floor([], floor_number), do: floor_number
+  defp find_floor('\n', floor_number), do: floor_number
 
   defp find_floor([head | tail], floor_number) when <<head>> == "(" do
     find_floor(tail, floor_number + 1)
