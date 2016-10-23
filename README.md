@@ -5,5 +5,11 @@ expert who wants to stay sharp as they are for a beginner who is just
 learning to code. Each puzzle calls upon different skills and has two
 parts that build on a theme.
 
-## Day 1
-Check the file santa_present.txt
+
+
+## Setup
+  Run the project using 
+  `mix run`
+
+  Choose one day and one algorithm to solve the problem
+
