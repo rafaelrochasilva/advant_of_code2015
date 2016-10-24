@@ -17,6 +17,7 @@ defmodule AdventOfCode.Day1Starter do
 
     Select a problem solver:
     1) Delivery Present with Recursion
+    2) Delivery Present with GenServer
     q) Exit
     ========================================================================
     """
@@ -29,6 +30,16 @@ defmodule AdventOfCode.Day1Starter do
   defp select_option("1\n") do
     File.read!("public/day1.txt")
     |> AdventOfCode.Day1.DeliverPresentRecursion.floor
+    |> display_result
+
+    start
+  end
+
+  defp select_option("2\n") do
+    path = File.read!("public/day1.txt")
+    pid = AdventOfCode.Day1.DeliverPresentGenServer.start
+
+    AdventOfCode.Day1.DeliverPresentGenServer.floor(pid, path)
     |> display_result
 
     start
