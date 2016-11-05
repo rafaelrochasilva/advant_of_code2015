@@ -1,11 +1,20 @@
 defmodule AdventOfCode.Day1Starter do
   def start() do
+    display_main_menu
+    |> IO.gets
+    |> select_option
+    |> display_result
+
+    start
+  end
+
+  defp display_main_menu do
     """
     ========================================================================
     Santa is trying to deliver presents in a large apartment building, but he
-    can't find the right floor - the directions he got are a little confusing.
+    can't find the right floor - the directions he got are a little confusing.\n
     He starts on the ground floor (floor 0) and then follows the instructions
-    one character at a time. An opening parenthesis, (, means he should go up
+    one character at a time.\n An opening parenthesis, (, means he should go up
     one floor, and a closing parenthesis, ), means he should go down one floor.
     The apartment building is very tall, and the basement is very deep; he will
     never find the top or bottom floors.
@@ -21,36 +30,35 @@ defmodule AdventOfCode.Day1Starter do
     q) Exit
     ========================================================================
     """
-    |> IO.gets
-    |> select_option
   end
 
-  defp select_option("q\n"), do: IO.puts "Bye bye"
+  defp select_option("q\n"), do: "Bye bye"
 
   defp select_option("1\n") do
-    File.read!("public/day1.txt")
-    |> AdventOfCode.Day1.DeliverPresentRecursion.floor
-    |> display_result
+    path = File.read!("public/day1.txt")
 
-    start
+    :timer.tc(AdventOfCode.Day1.DeliverPresentRecursion, :floor, [path])
   end
 
   defp select_option("2\n") do
     path = File.read!("public/day1.txt")
     pid = AdventOfCode.Day1.DeliverPresentGenServer.start
 
-    AdventOfCode.Day1.DeliverPresentGenServer.floor(pid, path)
-    |> display_result
-
-    start
+    :timer.tc(AdventOfCode.Day1.DeliverPresentGenServer, :floor, [pid, path])
   end
 
-  defp select_option(_) do
-    IO.puts "Option not valid"
-    start
+  defp select_option(_), do: "Option not valid"
+
+  defp display_result({time, floor}) do
+    "The present will be delivered at #{floor} floor, in #{time/1_000_000} seconds."
+    |> print_result(:blue)
   end
 
-  defp display_result(floor) do
-    IO.puts "The present will be delivered at #{floor} floor."
+  defp display_result(phrase), do: print_result(phrase, :red)
+
+  defp print_result(text, color) do
+    [color, text]
+    |> IO.ANSI.format
+    |> IO.puts
   end
 end
