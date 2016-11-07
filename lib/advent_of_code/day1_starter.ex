@@ -4,8 +4,6 @@ defmodule AdventOfCode.Day1Starter do
     |> IO.gets
     |> select_option
     |> display_result
-
-    start
   end
 
   defp display_main_menu do
@@ -36,15 +34,16 @@ defmodule AdventOfCode.Day1Starter do
 
   defp select_option("1\n") do
     path = File.read!("public/day1.txt")
+    path_duplicated = String.duplicate(path, 10)
 
-    :timer.tc(AdventOfCode.Day1.DeliverPresentRecursion, :floor, [path])
+    :timer.tc(AdventOfCode.Day1.DeliverPresentRecursion, :floor, [path_duplicated])
   end
 
   defp select_option("2\n") do
     path = File.read!("public/day1.txt")
-    pid = AdventOfCode.Day1.DeliverPresentGenServer.start
+    path_duplicated = String.duplicate(path, 10)
 
-    :timer.tc(AdventOfCode.Day1.DeliverPresentGenServer, :floor, [pid, path])
+    :timer.tc(AdventOfCode.Day1.DeliverPresentAggregator, :start, [path_duplicated])
   end
 
   defp select_option(_), do: "Option not valid"

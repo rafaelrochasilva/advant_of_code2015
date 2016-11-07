@@ -1,10 +1,11 @@
 defmodule AdventOfCode.Day1.DeliverPresentGenServer do
   use GenServer
 
+  @initial_floor 0
+
   # Client API
   def start() do
-    initial_floor = 0
-    {:ok, pid} = GenServer.start_link(__MODULE__, initial_floor, [])
+    {:ok, pid} = GenServer.start_link(__MODULE__, @initial_floor, [])
     pid
   end
 
@@ -13,13 +14,11 @@ defmodule AdventOfCode.Day1.DeliverPresentGenServer do
     find_floor(pid, path)
   end
 
-  def find_floor(pid, []) do
-    GenServer.call(pid, {:floor, []})
-  end
+  def find_floor(pid, []), do: GenServer.call(pid, {:floor, []})
 
   def find_floor(pid, [head | tail]) do
     GenServer.call(pid, {:floor, [head | tail]})
-    floor(pid, tail)
+    find_floor(pid, tail)
   end
 
   # Server API
@@ -31,11 +30,12 @@ defmodule AdventOfCode.Day1.DeliverPresentGenServer do
     {:reply, tail, floor_number - 1}
   end
 
-  def handle_call({:floor, []}, _from, floor_number) do
-    {:reply, floor_number, floor_number}
+  def handle_call({:floor, [head | tail]}, _from, floor_number) when <<head>> == "\n" do
+    IO.puts head
+    {:reply, tail, floor_number}
   end
 
-  def handle_call({:floor, '\n'}, _from, floor_number) do
+  def handle_call({:floor, []}, _from, floor_number) do
     {:reply, floor_number, floor_number}
   end
 end
