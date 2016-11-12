@@ -15,7 +15,7 @@ defmodule AdventOfCode.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [
-      mod: {AdventOfCode, []},
+      mod: environment,
       applications: [:logger]
     ]
   end
@@ -31,5 +31,13 @@ defmodule AdventOfCode.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     []
+  end
+
+  defp environment do
+    if Mix.env == :test do
+      []
+    else
+      {AdventOfCode, []}
+    end
   end
 end

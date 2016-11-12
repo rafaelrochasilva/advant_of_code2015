@@ -9,7 +9,7 @@ defmodule AdventOfCode do
     |> choose_option
   end
 
-  defp welcome_message() do
+  defp welcome_message do
     """
     ========================================================================
     ========================================================================
@@ -22,7 +22,7 @@ defmodule AdventOfCode do
     |> IO.puts
   end
 
-  defp display_options() do
+  defp display_options do
     """
     ========================================================================
     Choose a day to run the respective code:

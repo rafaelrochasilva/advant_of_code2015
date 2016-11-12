@@ -1,5 +1,5 @@
 defmodule AdventOfCode.Day1Starter do
-  def start() do
+  def start do
     display_main_menu
     |> IO.gets
     |> select_option
@@ -23,8 +23,9 @@ defmodule AdventOfCode.Day1Starter do
     ((( and (()(()( both result in floor 3.
 
     Select a problem solver:
-    1) Delivery Present with Recursion
-    2) Delivery Present with GenServer
+    1) Deliver Present with Recursion
+    2) Deliver Present with GenServer
+    3) Deliver Present with Task
     q) Exit
     ========================================================================
     """
@@ -33,17 +34,15 @@ defmodule AdventOfCode.Day1Starter do
   defp select_option("q\n"), do: "Bye bye"
 
   defp select_option("1\n") do
-    path = File.read!("public/day1.txt")
-    path_duplicated = String.duplicate(path, 10)
-
-    :timer.tc(AdventOfCode.Day1.DeliverPresentRecursion, :floor, [path_duplicated])
+    :timer.tc(AdventOfCode.Day1.DeliverPresentRecursion, :floor, [deliver])
   end
 
   defp select_option("2\n") do
-    path = File.read!("public/day1.txt")
-    path_duplicated = String.duplicate(path, 10)
+    :timer.tc(AdventOfCode.Day1.DeliverPresentAggregator, :start, [deliver])
+  end
 
-    :timer.tc(AdventOfCode.Day1.DeliverPresentAggregator, :start, [path_duplicated])
+  defp select_option("3\n") do
+    :timer.tc(AdventOfCode.Day1.DeliverPresentTask, :floor, [deliver])
   end
 
   defp select_option(_), do: "Option not valid"
@@ -59,5 +58,10 @@ defmodule AdventOfCode.Day1Starter do
     [color, text]
     |> IO.ANSI.format
     |> IO.puts
+  end
+
+  defp deliver do
+    File.read!("public/day1.txt")
+    |> String.duplicate(1000)
   end
 end
