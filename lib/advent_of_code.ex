@@ -27,10 +27,12 @@ defmodule AdventOfCode do
     ========================================================================
     Choose a day to run the respective code:
     1) Day 1 - Santa Delives Presents
+    2) Day 2: I Was Told There Would Be No Math
     q) Quit
     """
   end
 
   defp choose_option("1\n"), do: AdventOfCode.Day1Starter.start
+  defp choose_option("2\n"), do: AdventOfCode.Day2Starter.start
   defp choose_option("q\n"), do: IO.puts "Bye bye" 
 end
