@@ -31,7 +31,6 @@ defmodule AdventOfCode.Day1.DeliverPresentGenServer do
   end
 
   def handle_call({:floor, [head | tail]}, _from, floor_number) when <<head>> == "\n" do
-    IO.puts head
     {:reply, tail, floor_number}
   end
 
